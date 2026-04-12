@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,9 +19,17 @@ public class GameManager : MonoBehaviour
     {
         playerName.text = player.CharName;
         enemyName.text = enemy.CharName;
-        playerHP.text = "HP: " + player.health.ToString("F1");
-        enemyHP.text = "HP: " + enemy.health.ToString("F1");
+        playerHP.text = "HP: " + player.Health.ToString("F1");
+        enemyHP.text = "HP: " + enemy.Health.ToString("F1");
         playerWeapon.text = player.ActiveWeaponName;
+        
+        {
+            playerName.text = player.CharName;
+            if (player.Health <= 0 || enemy.Health <= 0)
+            {
+                restartPanel.SetActive(true);
+            }
+        }
     }
 
     public void SwitchWeapon()
@@ -36,9 +45,10 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    public GameObject restartPanel;
+    public void RestartGame()
     {
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
